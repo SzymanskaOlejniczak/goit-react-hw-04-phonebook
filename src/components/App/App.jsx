@@ -6,7 +6,7 @@ import { ContactList } from '../ContactList/ContactList';
 import style from './App.module.css';
 
 export const App=()=> {
-  const [contact, setContact] = useState(
+  const [contacts, setContacts] = useState(
   JSON.parse(window.localStorage.getItem('contacts'))??[
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
@@ -17,27 +17,29 @@ export const App=()=> {
   const [filter, setFilter] = useState('');
   
   const addContact = ({ name, number }) => {
-      const isContact = contact.find(
+      const isContact = contacts.find(
         contact => contact.name === name);
 
       if (isContact) {
         alert(`${name} is already in contact`);
-        setContact(contact);
+        setContacts(contacts);
       } else {
-        setContact ([{
+        setContacts ([{
         id: nanoid(),
         name,
         number,
       }, 
-      ...contact,]
+      ...contacts,]
         );
       }
     };
   
 
   const deleteContact = contactId => {
-    setContact(prevState => prevState.filter(contact => contact.id !== contactId));
-    };
+    setContacts(prevContacts =>
+       prevContacts.filter(contact => contact.id !== contactId)
+       );
+  };
   
 
   const changeFilter = event => {
@@ -46,8 +48,7 @@ export const App=()=> {
 
   const getFiltredContacts = () => {
     const normalizedFilter = filter.toLowerCase();
-
-    return contact
+    return contacts
       .map(
         contact =>
           contact.name.toLowerCase().includes(normalizedFilter) && contact
@@ -56,8 +57,8 @@ export const App=()=> {
   };
  
   useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contact));
-  }, [contact]);
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const filtredContacts = getFiltredContacts();
     return (
