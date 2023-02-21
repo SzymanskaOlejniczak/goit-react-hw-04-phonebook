@@ -13,7 +13,7 @@ export const ContactList = ({ contacts, onDeleteContact }) => (
           type="button"
           onClick={() => onDeleteContact(id)}
         >
-          <span>Delete</span> 
+          <span>Delete</span>
         </button>
       </li>
     ))}
@@ -21,12 +21,12 @@ export const ContactList = ({ contacts, onDeleteContact }) => (
 );
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf
-    (PropTypes.exact({
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    })),
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ),
   onDeleteContact: PropTypes.func.isRequired,
 };
-
